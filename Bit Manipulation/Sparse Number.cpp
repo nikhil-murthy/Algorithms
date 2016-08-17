@@ -20,7 +20,7 @@ sparse.
 #include <bits/stdc++.h>
 using namespace std;
 
-bool isSparse(int num)
+bool isSparse(int n)
 {
 	if(n & n>>1)
 		return false;
