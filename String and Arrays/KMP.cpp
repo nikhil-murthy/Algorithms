@@ -1,12 +1,18 @@
 #include <bits/stdc++.h>
-using namespace std;
 
-int* findLPS(string pattern)
+using namespace std;
+int lps[100];  // longest prefix suffix array
+
+
+void findLPS(string pattern)
 {
 	int j = 0;
 	int i = 1;
 	int n = pattern.length();
-	int lps[n] = {0}; // longest prefix suffix array
+
+	for(int k=0;k<n;k++)
+        lps[k]=0;
+
 	while(i<n)
 	{
 		if(pattern[j] == pattern[i])
@@ -28,11 +34,9 @@ int* findLPS(string pattern)
 			}
 		}
 	}
-
-	return lps;
 }
 
-bool KMP(int* lps,string text,string pattern)
+int KMP(string text,string pattern)
 {
 	int i = 0;
 	int j = 0;
@@ -54,16 +58,29 @@ bool KMP(int* lps,string text,string pattern)
 				i++;
 		}
 		if(j==m)
-			return true;
+			return (i-m);
+
 	}
-	return false;
+	return -1;
 }
 int main()
 {
 	string text,pattern;
-	cin>>text>>pattern;
+	//cin>>text>>pattern;
+	fflush(stdin);
+	getline(cin,text);
+	fflush(stdin);
+	getline(cin,pattern);
 
-	int *lps = findLPS(pattern);
+    findLPS(pattern);
 
-	cout<<KMP(lps,text,pattern);
+    int pos = KMP(text,pattern);
+
+    if(pos!=-1)
+        cout<<"\nPattern found at :"<<pos+1<<endl;
+    else
+        cout<<"\nPattern not found\n";
+
+    return 0;
 }
+
